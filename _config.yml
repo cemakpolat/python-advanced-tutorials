@@ -1,10 +1,10 @@
-title: Go with Concrete Use Cases
-description: This project aims at teaching Go Language step by step!
+title: Python Advanced 
+description: This project aims at teaching the advanced topics via Python language step by step!
 baseurl: ""
 theme: just-the-docs
 
 url: https://github.com/cemakpolat/
-repository: gotutorials # for github-metadata
+repository: python-advanced-tutorials # for github-metadata
 
 permalink: pretty
 
