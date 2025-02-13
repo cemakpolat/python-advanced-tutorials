@@ -1,7 +1,7 @@
 ---
 title: Metaclasses and Dynamic Class Creation
 parent: Advanced Python Concepts
-nav_order: 1
+nav_order: 2
 ---
 
 ## Chapter 3: Metaclasses and Dynamic Class Creation

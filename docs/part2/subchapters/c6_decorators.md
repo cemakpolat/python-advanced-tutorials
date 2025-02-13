@@ -1,7 +1,7 @@
 ---
 title: Decorators: Enhancing Functions and Classes
-parent: Advanced Go Development
-nav_order: 4
+parent: Advanced Python Concepts
+nav_order: 5
 ---
 
 ## Chapter 6: Decorators - Enhancing Functions and Classes

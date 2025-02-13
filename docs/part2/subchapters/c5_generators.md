@@ -1,7 +1,7 @@
 ---
 title: Generators and Coroutines - Efficient Iteration and Asynchronous Programming
-parent: Advanced Go Development
-nav_order: 3
+parent: Advanced Python Concepts
+nav_order: 4
 ---
 
 

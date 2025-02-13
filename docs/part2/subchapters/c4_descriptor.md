@@ -1,7 +1,7 @@
 ---
 title: Descriptors and Attribute Management
 parent: Advanced Python Concepts
-nav_order: 2
+nav_order: 3
 ---
 
 ## Chapter 4: Descriptors and Attribute Management

@@ -1,4 +1,4 @@
 ---
-title: Real-World Applications
+title: Applying Advanced Concepts
 nav_order: 4
 ---

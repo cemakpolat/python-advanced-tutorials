@@ -1,7 +1,7 @@
 ---
 title: Memory Management and Optimization
-parent: Advanced Go Development
-nav_order: 7
+parent: Advanced Python Concepts
+nav_order: 8
 ---
 
 ## Chapter 9:  Memory Management and Optimization

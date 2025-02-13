@@ -1,4 +1,4 @@
-title: Python Advanced 
+title: Python Advanced Programming
 description: This project aims at teaching the advanced topics via Python language step by step!
 baseurl: ""
 theme: just-the-docs
@@ -68,6 +68,6 @@ mermaid:
 heading_anchors: true
 
 aux_links:
-  Template Repository: https://github.com/cemakpolat/gotutorials
+  Template Repository: https://github.com/cemakpolat/python-advanced-tutorials/
 
 nav_enabled: true
