@@ -1,10 +1,10 @@
 ---
-title: File Handling and Input/Output
+title: Context Managers - Resource Management
 parent: Advanced Go Development
 nav_order: 5
 ---
 
-## Chapter 7: File Handling and Input/Output
+## Chapter 7: Context Managers - Resource Management
 
 Efficient input and output operations are essential for any software application. Go provides robust packages for interacting with files, handling various data formats, and managing standard I/O streams. This chapter will guide you through the most common I/O tasks.
 

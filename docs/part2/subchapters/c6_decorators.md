@@ -1,10 +1,10 @@
 ---
-title: Working with Packages and Modules
+title: Decorators: Enhancing Functions and Classes
 parent: Advanced Go Development
 nav_order: 4
 ---
 
-## Chapter 6: Working with Packages and Modules
+## Chapter 6: Decorators - Enhancing Functions and Classes
 
 As your Go projects grow in size and complexity, it becomes essential to organize your code into reusable units. Go achieves this through the use of packages and modules. This chapter will guide you on creating packages, managing dependencies, and following best practices for organized and maintainable code.
 

@@ -1,10 +1,10 @@
 ---
-title: Functions as First Class Citizens
-parent: Advanced Go Development
+title: Descriptors and Attribute Management
+parent: Advanced Python Concepts
 nav_order: 2
 ---
 
-## Chapter 4: Functions as First-Class Citizens
+## Chapter 4: Descriptors and Attribute Management
 
 In Go, functions are considered first-class citizens. This means that functions can be treated like any other value: they can be assigned to variables, passed as arguments to other functions, and returned as values from other functions. This flexibility opens up a wide range of possibilities for writing powerful and expressive code.
 

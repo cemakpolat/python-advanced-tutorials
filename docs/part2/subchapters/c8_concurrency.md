@@ -1,10 +1,10 @@
 ---
-title: Concurrency in Go
+title: Concurrency and Parallelism - Threads, Processes, and AsyncIO
 parent: Advanced Go Development
 nav_order: 6
 ---
 
-## Chapter 8: Concurrency in Go
+## Chapter 8: Concurrency and Parallelism - Threads, Processes, and AsyncIO
 
 Concurrency is a key feature of Go, enabling you to perform multiple tasks seemingly simultaneously. Go achieves concurrency through goroutines and channels, which provide a lightweight and efficient approach to parallel programming. This chapter will guide you through the core concepts and best practices of concurrency in Go.
 

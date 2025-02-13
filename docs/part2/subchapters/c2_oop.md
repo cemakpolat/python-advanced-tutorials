@@ -1,7 +1,7 @@
 ---
-title: Python Fundamentals
-parent: Solidify Python Fundamentals
-nav_order: 2
+title: OOP in Python
+parent: Advanced Python Concepts
+nav_order: 1
 ---
 ## Chapter 2: Object-Oriented Programming in Python
 

@@ -1,11 +1,11 @@
 ---
-title: Error Handling
+title: Generators and Coroutines - Efficient Iteration and Asynchronous Programming
 parent: Advanced Go Development
 nav_order: 3
 ---
 
 
-## Chapter 5: Error Handling
+## Chapter 5: Generators and Coroutines - Efficient Iteration and Asynchronous Programming
 
 In Go, error handling is an essential part of writing robust and reliable code. Go encourages explicit error handling, which means you must check for errors after operations that can fail. This chapter explains the mechanisms and best practices for handling errors gracefully.
 
