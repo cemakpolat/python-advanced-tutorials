@@ -162,20 +162,26 @@ nav_order: 2
     *   **Adding Mixin Classes:** Metaclasses can automatically add mixin classes to a class's inheritance hierarchy. Mixins provide a way to add common functionality to multiple classes without using inheritance.
 
         ```python
-        class Mixin:
+        class AMixin:
             def mixin_method(self):
-                return "Mixin method called"
+                return "A Mixin method called"
+
+        class BMixin:
+            def mixin_method(self):
+                return "B Mixing method called"
 
         class AddMixinMeta(type):
             def __new__(cls, name, bases, attrs):
-                attrs['mixin_method'] = Mixin.mixin_method
+                attrs['a_mixin_method'] = AMixin.mixin_method
+                attrs['b_mixin_method'] = BMixin.mixin_method
                 return super().__new__(cls, name, bases, attrs)
 
         class MyClass(metaclass=AddMixinMeta):
             pass
 
         obj = MyClass()
-        print(obj.mixin_method()) # Output: Mixin method called
+        print(obj.a_mixin_method()) # Output: Mixin method called
+        print(obj.b_mixin_method()) # Output: Mixin method called
         ```
 
 *   **3.4 Dynamic Class Creation with `type()`:**
@@ -189,14 +195,19 @@ nav_order: 2
     Here's an example:
 
     ```python
-    def say_hello(self):
-        return "Hello!"
+        def say_hello(self):
+            return "Hello!"
 
-    MyDynamicClass = type('MyDynamicClass', (object,), {'say_hello': say_hello, 'class_attribute': 10})
+        def move(self):
+            return "Move!"
 
-    obj = MyDynamicClass()
-    print(obj.say_hello()) # Output: Hello!
-    print(obj.class_attribute) # Output: 10
+        MyDynamicClass = type('MyDynamicClass', (object,), {'say_hello': say_hello, 'move': move, 'class_attribute': 10})
+
+        obj = MyDynamicClass()
+        print(obj.say_hello())  # Output: Hello!
+        print(obj.move())   # Output: Move!
+        print(obj.class_attribute)  # Output: 10
+
     ```
 
     Dynamic class creation with `type()` is useful for generating classes based on configuration data or user input. It's a simpler alternative to using custom metaclasses for basic class creation tasks.
