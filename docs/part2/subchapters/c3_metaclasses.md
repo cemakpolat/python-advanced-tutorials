@@ -118,45 +118,46 @@ nav_order: 2
     *   **Abstract Base Class Enforcement:** Metaclasses can be used to ensure that subclasses implement certain methods, similar to abstract base classes (ABCs). However, metaclasses provide stricter enforcement at class definition time. This means you will find out earlier when your code is wrong.
 
         ```python
-        class EnforceMethodsMeta(type):
-            def __new__(cls, name, bases, attrs):
-                abstract_methods = attrs.get("__abstractmethods__", None)
+            class EnforceMethodsMeta(type):
+                def __new__(cls, name, bases, attrs):
+                    abstract_methods = attrs.get("__abstractmethods__", None)
 
-                if abstract_methods:
-                    for base in bases:
-                        # Get abstract method
-                        base_abstract_methods = getattr(base, "__abstractmethods__", None)
+                    if abstract_methods:
+                        for base in bases:
+                            # Get abstract method
+                            base_abstract_methods = getattr(base, "__abstractmethods__", None)
 
-                        # Skip inheritance if base is not using this metaclass
-                        if base_abstract_methods is None:
-                            continue
-                        
-                        # Check if methods are being implemented
-                        for method in base_abstract_methods:
-                            if method not in attrs:
-                                raise TypeError(f"Can't create class '{name}' without abstract method '{method}'")
+                            # Skip inheritance if base is not using this metaclass
+                            if base_abstract_methods is None:
+                                continue
+                            
+                            # Check if methods are being implemented
+                            for method in base_abstract_methods:
+                                if method not in attrs:
+                                    raise TypeError(f"Can't create class '{name}' without abstract method '{method}'")
 
-                return super().__new__(cls, name, bases, attrs)
-        
-        #Example
-        class Base(metaclass=EnforceMethodsMeta):
-            __abstractmethods__ = ["to_string", "convert"]
-
-        class Good(Base):
-            def to_string(self):
-                return "Good"
+                    return super().__new__(cls, name, bases, attrs)
             
-            def convert(self):
-                return ""
+            #Example
+            class Base(metaclass=EnforceMethodsMeta):
+                __abstractmethods__ = ["to_string", "convert"]
 
-        #class Bad(Base): #Error here!
-        #    def to_string(self):
-        #        return "Good"
+            class Good(Base):
+                def to_string(self):
+                    return "Good"
+                
+                def convert(self):
+                    return ""
 
-        #obj = Bad()
-        #obj.to_string()
-        obj = Good()
-        obj.to_string()
+            #class Bad(Base): #Error here!
+            #    def to_string(self):
+            #        return "Good"
+
+            #obj = Bad()
+            #obj.to_string()
+            obj = Good()
+            obj.to_string()
+        ```
 
     *   **Adding Mixin Classes:** Metaclasses can automatically add mixin classes to a class's inheritance hierarchy. Mixins provide a way to add common functionality to multiple classes without using inheritance.
 
@@ -373,7 +374,7 @@ nav_order: 2
 
         # Create a user
         new_user = client.create_user(name="John Doe", email="john.doe@example.com")
-        print("New user:", new_user)
+        print("New user:", new_user)`
         ```
 
 *   **Explanation of the Code:**
