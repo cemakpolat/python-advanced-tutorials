@@ -341,9 +341,108 @@ nav_order: 3
 
     This project demonstrates how descriptors can be used to create a flexible and robust unit conversion system. By encapsulating the unit conversion logic in a descriptor, you can ensure that the unit conversions are performed correctly and consistently.
 
+
+**Project 4.2: Data Model with Validation and Computed Properties**
+
+    This project demonstrates how to use descriptors to create a robust data model with data validation and computed properties.
+
+    ```python
+    class NonNegative:
+        """
+        Descriptor that ensures a value is non-negative.
+        """
+        def __set_name__(self, owner, name):
+            self.name = name
+
+        def __get__(self, instance, owner):
+            if instance is None:
+                return self
+            return instance.__dict__[self.name]
+
+        def __set__(self, instance, value):
+            if not isinstance(value, (int, float)):
+                raise TypeError(f"{self.name} must be a number")
+            if value < 0:
+                raise ValueError(f"{self.name} must be non-negative")
+            instance.__dict__[self.name] = value
+
+    class String:
+        """
+        Descriptor that ensures a value is a string.
+        """
+        def __set_name__(self, owner, name):
+            self.name = name
+
+        def __get__(self, instance, owner):
+            if instance is None:
+                return self
+            return instance.__dict__[self.name]
+
+        def __set__(self, instance, value):
+            if not isinstance(value, str):
+                raise TypeError(f"{self.name} must be a string")
+            instance.__dict__[self.name] = value
+
+    class Product:
+        """
+        Data model for representing products in an e-commerce system.
+        """
+        name = String()
+        price = NonNegative()
+        discount_percentage = NonNegative()
+
+        def __init__(self, name, price, discount_percentage=0):
+            self.name = name
+            self.price = price
+            self.discount_percentage = discount_percentage
+
+        @property
+        def discounted_price(self):
+            """
+            Computed property that calculates the discounted price.
+            """
+            discount_amount = self.price * (self.discount_percentage / 100)
+            return self.price - discount_amount
+
+        @property
+        def description(self):
+            """
+            Lazy-loaded description (for demonstration purposes)
+            """
+            if not hasattr(self, '_description'):
+                print("Loading description...")
+                # Simulate loading description from database or external source
+                self._description = f"This is a description for {self.name}."
+            return self._description
+
+        def __str__(self):
+            return f"Product(name='{self.name}', price={self.price}, discounted_price={self.discounted_price})"
+
+    #Example Usage:
+    if __name__ == '__main__':
+        product = Product(name="Awesome T-Shirt", price=25, discount_percentage=10)
+        print(product)
+        print("Discounted Price:", product.discounted_price)
+        print("Description:", product.description) #lazy load happens here
+        print("Description:", product.description) #no lazy load, it is cached
+
+        product.price = 30
+        print(product)
+
+        #product.price = -10 # Raises ValueError
+        #product.name = 123 # Raises TypeError
+    ```
+
+**Explanation:**
+
+*   **`NonNegative` Descriptor:** Validates that the attribute value is a number and is not negative.
+*   **`String` Descriptor:** Validates that the attribute value is a string.
+*   **`Product` Class:**
+    *   Uses the `NonNegative` and `String` descriptors to enforce validation rules for the `price`, `discount_percentage`, and `name` attributes.
+    *   `discounted_price` is a computed property that calculates the discounted price based on the `price` and `discount_percentage`.
+    *   `description` is a lazy-loaded property. The description is only loaded when it's accessed for the first time.
+*   **Example Usage:** Demonstrates how to create a `Product` object, access its attributes, and how the descriptors enforce the validation rules.
+
 *   **4.7 Conclusion:**
 
     This chapter provided a comprehensive overview of descriptors and attribute management in Python. We explored what descriptors are, how they work, and how they can be used to control attribute access and modification. We also looked at different use cases for descriptors, such as validation, read-only attributes, computed attributes, and lazy loading. Finally, we explored the `@property` decorator and how it can be used to create simple descriptors. By mastering descriptors, you'll be well-equipped to design and implement more robust and maintainable Python classes.
-
-    In the next chapter, we'll delve into generators and coroutines, exploring how to write memory-efficient and asynchronous code in Python.
-
