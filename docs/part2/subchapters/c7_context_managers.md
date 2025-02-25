@@ -297,6 +297,159 @@ nav_order: 6
 
     This project provides a practical example of how context managers can simplify database transactions and ensure data integrity.
 
+
+*   **Project 7.2: Timing Code Blocks with a Context Manager**
+
+    This project involves creating a context manager that measures the execution time of a code block and logs the result. This is a common task for performance analysis and optimization.
+
+    ```python
+    import time
+    import logging
+
+    # Configure logging
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+    class Timer:
+        """
+        Context manager for timing code blocks.
+        """
+        def __init__(self, name):
+            self.name = name
+
+        def __enter__(self):
+            self.start_time = time.time()
+            return self
+
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            end_time = time.time()
+            elapsed_time = end_time - self.start_time
+            logging.info(f"Code block '{self.name}' took {elapsed_time:.4f} seconds")
+
+    #Example Usage:
+    if __name__ == '__main__':
+        with Timer("My Code Block"):
+            # Simulate a time-consuming operation
+            time.sleep(2)
+            result = sum(i**2 for i in range(100000))
+            logging.info(f"Result: {result}") #This will also add to the total time
+
+    ```
+
+    **Explanation:**
+
+    1.  **`Timer` Class:**
+        *   `__init__(self, name)`: Initializes the name of the code block.
+        *   `__enter__(self)`: Records the start time using `time.time()`.
+        *   `__exit__(self, exc_type, exc_val, exc_tb)`: Calculates the elapsed time, logs the execution time using the `logging` module, and handles any exceptions that may have occurred. The arguments `exc_type`, `exc_val`, and `exc_tb` are ignored in this case because the context manager doesn't perform any special exception handling.
+    2.  **Example Usage:**
+        *   The example code uses the `Timer` context manager to measure the execution time of a code block that performs a time-consuming operation (simulated with `time.sleep(2)`).
+        *   The output will show the time taken.
+
+    This project demonstrates how to create a simple and reusable context manager that can be used to measure the execution time of any code block. This is a valuable tool for performance analysis and optimization.
+
+Okay, I understand. Let's add a third project that's closer to a real-world use case, specifically within the realm of IoT. This project will demonstrate how context managers can be used to manage connections to a sensor and ensure proper cleanup, even in the face of potential errors.
+
+*   **Project 7.3: IoT Sensor Data Acquisition with Safe Connection Management**
+
+    This project simulates reading data from an IoT sensor (e.g., a temperature sensor) and sending it to a remote server. The context manager will handle the sensor connection, data acquisition, and connection closing, ensuring that the sensor is properly disconnected even if errors occur during data transmission.
+
+    ```python
+    import time
+    import random
+    import logging
+
+    # Configure logging
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+    class SensorConnection:
+        """
+        Context manager for managing a connection to an IoT sensor.
+        """
+        def __init__(self, sensor_id, server_address):
+            self.sensor_id = sensor_id
+            self.server_address = server_address
+            self.connection = None
+
+        def __enter__(self):
+            try:
+                # Simulate connecting to the sensor (e.g., via a network socket)
+                logging.info(f"Connecting to sensor {self.sensor_id} at {self.server_address}...")
+                self.connection = True # Simulate a successful connection
+                time.sleep(1)  # Simulate connection time
+                logging.info(f"Connected to sensor {self.sensor_id}")
+                return self
+            except Exception as e:
+                logging.error(f"Failed to connect to sensor {self.sensor_id}: {e}")
+                raise # Re-raise the exception to prevent further execution
+
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            try:
+                if self.connection:
+                    logging.info(f"Closing connection to sensor {self.sensor_id}...")
+                    time.sleep(0.5) # Simulate disconnect time
+                    self.connection = None #Simulate that there are no active connections
+                    logging.info(f"Connection to sensor {self.sensor_id} closed")
+            except Exception as e:
+                logging.error(f"Error closing connection to sensor {self.sensor_id}: {e}")
+
+        def read_data(self):
+            """
+            Simulates reading data from the sensor.
+            """
+            if not self.connection:
+                raise ValueError("Not connected to sensor")
+            # Simulate reading sensor data
+            data = random.randint(20, 30)  # Simulate temperature reading
+            logging.info(f"Sensor {self.sensor_id} reading: {data}°C")
+            return data
+
+    def send_data_to_server(data, server_address):
+        """
+        Simulates sending data to a remote server.
+        """
+        logging.info(f"Sending data {data} to server {server_address}...")
+        time.sleep(0.2)  # Simulate network transmission time
+        if random.random() < 0.1: #Simulate a potential issue
+            raise ConnectionError("Simulated network error")
+        logging.info(f"Data successfully sent to {server_address}")
+
+    #Example Usage:
+    if __name__ == '__main__':
+        sensor_id = "TemperatureSensor-123"
+        server_address = "data-server.example.com:8080"
+
+        try:
+            with SensorConnection(sensor_id, server_address) as sensor:
+                for i in range(3):
+                    try:
+                        data = sensor.read_data()
+                        send_data_to_server(data, server_address)
+                    except Exception as e:
+                        logging.error(f"Error during data acquisition/transmission: {e}")
+                        break # Stop if there's an irrecoverable issue with communication
+        except Exception as e:
+            logging.error(f"Error initializing sensor connection: {e}")
+    ```
+
+    **Explanation:**
+
+    1.  **`SensorConnection` Class:**
+        *   `__init__(self, sensor_id, server_address)`: Initializes the sensor ID and server address.
+        *   `__enter__(self)`: Simulates connecting to the sensor. Logs the connection attempt and sets up the connection.  If the connection fails, it logs the error and *re-raises* the exception.  This is important because it prevents the `with` block from executing if the connection cannot be established.
+        *   `__exit__(self, exc_type, exc_val, exc_tb)`: Simulates closing the connection to the sensor. Logs the disconnection attempt and any errors that occur.
+        *   `read_data(self)`: Simulates reading data from the sensor. Raises a `ValueError` if the connection has not been established.
+    2.  **`send_data_to_server(data, server_address)` Function:**
+        *   Simulates sending data to a remote server. Introduces a random chance of failure to simulate network errors.
+    3.  **Example Usage:**
+        *   The example code creates a `SensorConnection` object within a `try...except` block. This ensures that any exceptions that occur during sensor initialization are caught and handled.
+        *   The `with` statement ensures that the sensor connection is properly closed, even if exceptions occur during data acquisition or transmission.
+        *   A loop simulates reading data from the sensor and sending it to the server multiple times.
+        *   A `try...except` block within the loop handles any exceptions that may occur during data acquisition or transmission.
+
+    This project demonstrates how context managers can be used to manage connections to IoT sensors and ensure proper cleanup, even in the face of potential errors. The context manager ensures that the sensor connection is properly closed, regardless of whether the data transmission is successful or not. This is crucial for preventing resource leaks and ensuring the reliability of IoT systems.
+
+
+
 *   **7.8 Conclusion:**
 
     This chapter provided a comprehensive overview of context managers in Python. We explored what context managers are, how they work, and how they can be used to manage resources effectively. We also looked at different use cases for context managers, such as file I/O, database connections, network connections, and locks. By mastering context managers, you'll be well-equipped to write more robust, reliable, and Pythonic code.
