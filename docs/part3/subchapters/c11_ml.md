@@ -378,10 +378,6 @@ nav_order: 2
     *   **Focus:** Reinforces Scikit-learn pipelines, data preprocessing, feature engineering, model selection, and evaluation.
 
 
-Okay, I understand. You want fully coded, runnable examples for the two new projects as well. This will be a substantial addition. I will make sure to note where external datasets need to be downloaded and give explicit instructions.
-
-Here's the full code for the two new projects (11.2 and 11.3) to add to Chapter 11. Remember, these are meant to be added *before* the Conclusion section.
-
 *   **Project 11.2: Customer Churn Prediction Pipeline**
 
 ```python
