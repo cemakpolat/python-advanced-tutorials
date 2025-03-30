@@ -1,4 +1,4 @@
 ---
-title: Advanced Topics
+title: Applying Advanced Concepts
 nav_order: 5
 ---
